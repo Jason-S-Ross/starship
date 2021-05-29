@@ -4,6 +4,11 @@ use indexmap::IndexMap;
 use serde::Serialize;
 use starship_module_config_derive::ModuleConfig;
 
+#[cfg(not(target_os = "windows"))]
+pub const DELIMITER: &str = "/";
+#[cfg(target_os = "windows")]
+pub const DELIMITER: &str = "\\";
+
 #[derive(Clone, ModuleConfig, Serialize)]
 pub struct DirectoryConfig<'a> {
     pub truncation_length: i64,
@@ -41,7 +46,7 @@ impl<'a> Default for DirectoryConfig<'a> {
             read_only_style: "red",
             truncation_symbol: "",
             home_symbol: "~",
-            delimiter: "/",
+            delimiter: DELIMITER,
             fit_width: 0,
             fit_style: "Inner",
             fit_symbol: "…",
